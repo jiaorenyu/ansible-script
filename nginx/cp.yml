@@ -1,0 +1,12 @@
+---
+- hosts: dmp-api
+  remote_user: root
+  tasks:
+      - name: rotate_log
+        copy:
+          src=scripts
+          dest=/home/data/applications/
+      - lineinfile:
+          path: /var/spool/cron/root
+          regexp: 'ngx_access_log_rotate.sh'
+          line: "0 0 */1 * * cd /home/data/applications/scripts; bash ngx_access_log_rotate.sh dmp-api.cn.miaozhen.com"
